@@ -336,26 +336,26 @@ export function VoiceAIInfoGraphic() {
                         {/* Glow CTA button */}
                         <motion.button
                             onClick={() => {
-                                // Find the LeadConnector chat widget and trigger its phone button
+                                // Trigger the LeadConnector Voice AI widget
                                 const chatWidget = document.querySelector('chat-widget') as HTMLElement | null;
                                 if (chatWidget?.shadowRoot) {
-                                    const phoneBtn = chatWidget.shadowRoot.querySelector('[data-testid="call-button"], .call-btn, button[aria-label*="call"], button[aria-label*="Call"]') as HTMLElement | null;
+                                    // Primary: target the phone icon button directly
+                                    const phoneIcon = chatWidget.shadowRoot.querySelector('.lc_text-widget--phone-icon') as HTMLElement | null;
+                                    if (phoneIcon) {
+                                        phoneIcon.click();
+                                        return;
+                                    }
+                                    // Fallback: try the widget container or any clickable phone element
+                                    const phoneBtn = chatWidget.shadowRoot.querySelector(
+                                        '.lc_text-widget--btn, [class*="phone-icon"], [class*="call"], button'
+                                    ) as HTMLElement | null;
                                     if (phoneBtn) {
                                         phoneBtn.click();
                                         return;
                                     }
-                                    // Fallback: try clicking any button with a phone icon
-                                    const allButtons = chatWidget.shadowRoot.querySelectorAll('button');
-                                    allButtons.forEach(btn => {
-                                        if (btn.querySelector('svg') || btn.textContent?.toLowerCase().includes('call') || btn.textContent?.toLowerCase().includes('try')) {
-                                            btn.click();
-                                        }
-                                    });
                                 }
-                                // Final fallback: click the widget itself to open it
-                                if (chatWidget) {
-                                    chatWidget.click();
-                                }
+                                // Final fallback: scroll to bottom where widget lives
+                                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                             }}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.97 }}
