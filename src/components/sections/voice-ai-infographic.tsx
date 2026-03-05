@@ -295,6 +295,89 @@ export function VoiceAIInfoGraphic() {
                     </div>
                 </motion.div>
 
+                {/* ─── TRY IT LIVE CTA ─────────────────────────── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    className="relative max-w-xl mx-auto mb-28"
+                >
+                    <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-violet-500/20 blur-md" />
+                    <div className="relative rounded-2xl border border-cyan-500/20 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10 text-center">
+                        {/* Pulsing phone icon */}
+                        <div className="flex justify-center mb-6">
+                            <div className="relative">
+                                <motion.div
+                                    animate={{ scale: [1, 1.6, 1.6], opacity: [0.4, 0, 0] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                                    className="absolute inset-0 rounded-full bg-cyan-500/30"
+                                />
+                                <motion.div
+                                    animate={{ scale: [1, 1.4, 1.4], opacity: [0.3, 0, 0] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 0.3 }}
+                                    className="absolute inset-0 rounded-full bg-cyan-500/20"
+                                />
+                                <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)]">
+                                    <Phone className="w-7 h-7 text-white" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                            Try Our Voice AI —{" "}
+                            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Live</span>
+                        </h3>
+                        <p className="text-neutral-400 text-sm md:text-base mb-8 max-w-md mx-auto leading-relaxed">
+                            Don&apos;t just read about it — experience it yourself. Click below
+                            to have a real conversation with our AI voice agent right now.
+                        </p>
+
+                        {/* Glow CTA button */}
+                        <motion.button
+                            onClick={() => {
+                                // Find the LeadConnector chat widget and trigger its phone button
+                                const chatWidget = document.querySelector('chat-widget') as HTMLElement | null;
+                                if (chatWidget?.shadowRoot) {
+                                    const phoneBtn = chatWidget.shadowRoot.querySelector('[data-testid="call-button"], .call-btn, button[aria-label*="call"], button[aria-label*="Call"]') as HTMLElement | null;
+                                    if (phoneBtn) {
+                                        phoneBtn.click();
+                                        return;
+                                    }
+                                    // Fallback: try clicking any button with a phone icon
+                                    const allButtons = chatWidget.shadowRoot.querySelectorAll('button');
+                                    allButtons.forEach(btn => {
+                                        if (btn.querySelector('svg') || btn.textContent?.toLowerCase().includes('call') || btn.textContent?.toLowerCase().includes('try')) {
+                                            btn.click();
+                                        }
+                                    });
+                                }
+                                // Final fallback: click the widget itself to open it
+                                if (chatWidget) {
+                                    chatWidget.click();
+                                }
+                            }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.97 }}
+                            className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-base shadow-[0_0_40px_rgba(6,182,212,0.35)] hover:shadow-[0_0_60px_rgba(6,182,212,0.5)] transition-shadow duration-300 group"
+                        >
+                            <Phone className="w-5 h-5 group-hover:animate-bounce" />
+                            Talk to Our AI Now
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+
+                        <p className="text-neutral-600 text-xs mt-5">
+                            No signup required · Takes 30 seconds · Completely free
+                        </p>
+
+                        {/* Decorative corner accents */}
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-cyan-500/30 rounded-tl-2xl" />
+                        <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-cyan-500/30 rounded-tr-2xl" />
+                        <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-cyan-500/30 rounded-bl-2xl" />
+                        <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-cyan-500/30 rounded-br-2xl" />
+                    </div>
+                </motion.div>
+
                 {/* ─── VOICE AI FLOW ─────────────────────────── */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
